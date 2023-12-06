@@ -7,7 +7,7 @@
     Програма зібрана у форматі jar. Сам jar файл розміщено в releases на github.
     Програму можна запустити в Terminal-Local передавши аргументи: [ENCRYPT, DECRYPT, BRUTE_FORCE]
 
-(наприклад java -jar E:\JavaRush\dimitri.pasunkov.encoder\out\artifacts\dimitri_pasunkov_encoder_jar\dimitri.pasunkov.encoder.jar ENCRYPT E:\JavaRush\dimitri.pasunkov.encoder\src\main\java\com\javarush\Harry_Potter.txt 56)
+(наприклад java -jar E:\JavaRush\dimitri.pasunkov.encoder.dev\out\artifacts\dimitri_pasunkov_encoder_jar\dimitri.pasunkov.encoder.dev.jar ENCRYPT E:\JavaRush\dimitri.pasunkov.encoder.dev\src\main\java\com\javarush\Harry_Potter.txt 56)
 
     В результаті в папці з початковим файлом з'являється файл з тим самим ім'ям, що і вхідний файл, але з поміткою [ENCRYPTED] / [DECRYPTED] в залежності від виконаної операції
 
