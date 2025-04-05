@@ -11,9 +11,9 @@ target/
 mvnw
 mvnw.cmd
 *.iws
-=======
-.idea
-target
-out
->>>>>>> c760724 (add dev branch)
 *.iml
+*.ipr
+out
+SSH.txt
+### VS Code ###
+.vscode/
