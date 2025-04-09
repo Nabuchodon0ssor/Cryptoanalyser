@@ -4,24 +4,21 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 class FileService {
-    public static String originalFilePath = null;
     public static String filePathEncrypted = null;
     public static String filePathDecrypted = null;
 
-    FileService() {
-    }
-
     String createEncryptedFile(String originalFilePath) {
-        Path path = null;
+        Path originalPath = Path.of(originalFilePath);
+        Path encryptedPath = originalPath.resolveSibling(originalPath.getFileName() + "[ENCRYPTED]");
 
         try {
-            Files.deleteIfExists(Path.of(originalFilePath + "[ENCRYPTED]"));
-            path = Files.createFile(Path.of(originalFilePath + "[ENCRYPTED]"));
-        } catch (Exception var4) {
-            System.out.println("File not found");
+            Files.deleteIfExists(encryptedPath);
+            Files.createFile(encryptedPath);
+        } catch (Exception e) {
+            System.out.println("Error creating encrypted file: " + e.getMessage());
         }
 
-        return path != null ? path.toString() : null;
+        return encryptedPath.toString();
     }
 
     String createDecryptedFile(String filePath) {

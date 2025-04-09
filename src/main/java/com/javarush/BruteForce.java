@@ -1,8 +1,10 @@
 package com.javarush;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 class BruteForce {
+
     CaesarCipher cs = new CaesarCipher();
     public static int bruteForceKey;
 
@@ -10,30 +12,46 @@ class BruteForce {
     }
 
     int keyFinder(ArrayList<Character> inputtedEncryptedText) {
-        int key = 0;
-        int counter = 0;
+        int bestKey = 0;
+        int bestScore = -1;
 
-        for(int i = 1; i <= Constants.ALPHABET_EN.size(); ++i) {
+        String[] commonWords = {"the", "and", "is", "it", "of", "to"};
+        String[] commonPhrases = {"hello", "world", "this is", "how are"};
+
+        for (int i = 1; i <= 26; i++) {
             ArrayList<Character> decryptedText = this.cs.decryptText(inputtedEncryptedText, i);
-            int amountOfPointsAndSpaces = 0;
 
-            for(char chars : decryptedText) {
-                if (chars == '!' && (Character)decryptedText.get(decryptedText.indexOf(chars) + 1) == 8217) {
-                    ++amountOfPointsAndSpaces;
-                }
+            String decryptedString = decryptedText.stream()
+                    .map(String::valueOf)
+                    .collect(Collectors.joining());
 
-                if (chars == '?' && (Character)decryptedText.get(decryptedText.indexOf(chars) + 1) == 8217) {
-                    ++amountOfPointsAndSpaces;
+            int score = 0;
+
+            for (String word : commonWords) {
+                if (decryptedString.contains(word)) {
+                    score += 5;
                 }
             }
 
-            if (amountOfPointsAndSpaces > counter) {
-                counter = amountOfPointsAndSpaces;
-                key = i;
+            for (String phrase : commonPhrases) {
+                if (decryptedString.contains(phrase)) {
+                    score += 10;
+                }
+            }
+
+            score += (int) (decryptedString.chars().filter(ch -> ch == ' ').count() * 2);  // Пробелы важны
+
+            System.out.println("Key " + i + " score: " + score);
+
+            if (score > bestScore) {
+                bestScore = score;
+                bestKey = i;
             }
         }
 
-        return key;
+
+        System.out.println("Best key found: " + bestKey + " with score: " + bestScore);
+        return bestKey;
     }
 
     ArrayList<Character> bruteForce(ArrayList<Character> inputtedEncryptedText) {

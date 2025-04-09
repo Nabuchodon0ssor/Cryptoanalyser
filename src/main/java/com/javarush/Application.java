@@ -1,27 +1,48 @@
 package com.javarush;
 
 class Application {
-    Application() {
-    }
 
     public static void main(String[] args) {
-        if (args.length != 2 && args.length != 3) {
+        if (args.length < 2 || args.length > 3) {
             Console console = new Console();
             console.welcomeMenu();
-        } else {
-            WorkWithTerminal wwt = new WorkWithTerminal();
-            if (args[0].equals("ENCRYPT")) {
-                wwt.encryptFile(args[1], Integer.parseInt(args[2]));
-            }
-
-            if (args[0].equals("DECRYPT")) {
-                wwt.decryptFile(args[1], Integer.parseInt(args[2]));
-            }
-
-            if (args[0].equals("BRUTE_FORCE")) {
-                wwt.bruteForce(args[1]);
-            }
+            return;
         }
 
+        WorkWithTerminal wwt = new WorkWithTerminal();
+        String command = args[0];
+        String filePath = args[1];
+
+        switch (command) {
+            case "ENCRYPT":
+                if (args.length == 3) {
+                    int key = Integer.parseInt(args[2]);
+                    wwt.encryptFile(filePath, key);
+                } else {
+                    System.out.println("Error: ENCRYPT requires a key.");
+                }
+                break;
+
+            case "DECRYPT":
+                if (args.length == 3) {
+                    int key = Integer.parseInt(args[2]);
+                    wwt.decryptFile(filePath, key);
+                } else {
+                    System.out.println("Error: DECRYPT requires a key.");
+                }
+                break;
+
+            case "BRUTE_FORCE":
+                if (args.length == 2) {
+                    wwt.bruteForce(filePath);
+                } else {
+                    System.out.println("Error: BRUTE_FORCE requires a key.");
+                }
+                break;
+
+            default:
+                System.out.println("Error: unknown command " + command);
+                break;
+        }
     }
 }

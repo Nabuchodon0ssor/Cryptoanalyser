@@ -30,7 +30,8 @@ class CaesarCipher {
         for(char chars : text) {
             if (Constants.ALPHABET_EN.contains(chars)) {
                 int position = Constants.ALPHABET_EN.indexOf(chars);
-                int decryptIndex = (position - key) % Constants.ALPHABET_EN.size();
+                // int decryptIndex = (position - key) % Constants.ALPHABET_EN.size();
+                int decryptIndex = (position - key + Constants.ALPHABET_EN.size()) % Constants.ALPHABET_EN.size(); // changed
                 if (decryptIndex < 0) {
                     decryptIndex += Constants.ALPHABET_EN.size();
                 }

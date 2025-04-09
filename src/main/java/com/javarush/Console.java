@@ -1,5 +1,9 @@
 package com.javarush;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 class Console {
@@ -22,15 +26,17 @@ class Console {
     }
 
     void welcomeMenu() {
-        System.out.println("Welcome to the Text Encryption Software! Please write as number: \n1. If You want to input the text into the console \n2. If You want to choose a File with a text \n");
+        System.out.println("Welcome to the Text Encryption Software! Please write as number: \n" +
+                "1. If You want to input the text into the console \n" +
+                "2. If You want to choose a File with a text \n");
         int number = Integer.parseInt(this.scan.nextLine());
+
         if (number == 1) {
             this.consoleTextMenu();
-        }
-
-        if (number == 2) {
+        } else if (number == 2) {
             this.consoleFileMenu();
         } else {
+            System.out.println("Invalid input. Please choose 1 or 2.");
             this.welcomeMenu();
         }
 
@@ -65,49 +71,45 @@ class Console {
     }
 
     void consoleFileMenu() {
-        System.out.println("Please input the file path. \nExample: E:\\\\Java\\\\GitProjects\\\\dimitri.pasunkov.encoder.dev\\\\src\\\\main\\\\resources\\\\Harry_Potter.txt");
-        FileService.originalFilePath = this.scan.nextLine();
-        System.out.println("The file path is: " + FileService.originalFilePath);
-        System.out.println("Please input the encryption key: ");
-        CaesarCipher.key = Integer.parseInt(this.scan.nextLine());
-        System.out.println("The encryption key is: " + CaesarCipher.key);
-        this.wwt.encryptFile(FileService.originalFilePath, CaesarCipher.key);
-        System.out.println("The new file with encrypted text is: " + FileService.filePathEncrypted);
+        System.out.println("Please input the file path:\nExample: \n" +
+                "Harry_Potter.txt (if the file is directly in the 'resources' folder) or \n" +
+                "C:\\Users\\Me\\Documents\\Harry_Potter.txt (for an absolute path).");
 
-        while(true) {
-            System.out.println("Do You want to decrypt encrypted file: \nWith the same key (1) \nUsing brute force method? (2) \nEnd working with program (3)");
-            int number = this.scan.nextInt();
-            if (number == 3) {
-                System.out.println("Thank You for using this software!");
-                break;
+        String inputPath = scan.nextLine();
+
+        System.out.println("Choose an option:\n1. Encrypt\n2. Decrypt\n3. Brute Force");
+        int option = Integer.parseInt(scan.nextLine());
+
+        if (option == 1) {
+            System.out.println("Please input the encryption key:");
+            int key = Integer.parseInt(scan.nextLine());
+
+            wwt.encryptFile(inputPath, key);
+            System.out.println("File encrypted successfully!");
+
+            // 🔹 ВОЗВРАЩАЕМ ВОПРОС ПРО ДЕШИФРОВКУ
+            System.out.println("Do you want to decrypt the encrypted file now? (Yes - 1, No - 2)");
+            int decryptChoice = Integer.parseInt(scan.nextLine());
+
+            if (decryptChoice == 1) {
+                wwt.decryptFile(FileService.filePathEncrypted, key);
+                System.out.println("Decryption complete! Check the file.");
             }
 
-            if (number == 1) {
-                this.consoleFileMenu1();
-                break;
-            }
+        } else if (option == 2) {
+            System.out.println("Please input the encryption key:");
+            int key = Integer.parseInt(scan.nextLine());
 
-            if (number == 2) {
-                this.consoleFileMenu2();
-                break;
-            }
+            wwt.decryptFile(inputPath, key);
+            System.out.println("File decrypted successfully!");
+
+        } else if (option == 3) {
+            wwt.bruteForce(inputPath);
+            System.out.println("Brute Force decryption complete!");
+
+        } else {
+            System.out.println("Invalid option. Please restart.");
         }
-
     }
 
-    void consoleFileMenu1() {
-        Texts.decryptedFileText = this.cs.decryptText(Texts.encryptedFileText, CaesarCipher.key);
-        FileService.filePathDecrypted = this.fs.createDecryptedFile(FileService.filePathEncrypted);
-        this.fw.writeTextToFile(Texts.decryptedFileText, FileService.filePathDecrypted);
-        System.out.println("The new file with decrypted text is: " + FileService.filePathDecrypted);
-        System.out.println("Thank You for using this software!");
-    }
-
-    void consoleFileMenu2() {
-        Texts.decryptedFileText = this.bf.bruteForce(Texts.encryptedFileText);
-        FileService.filePathDecrypted = this.fs.createDecryptedFile(FileService.filePathEncrypted);
-        this.fw.writeTextToFile(Texts.decryptedFileText, FileService.filePathDecrypted);
-        System.out.println("The new file with decrypted text (using brute force method) is: " + FileService.filePathDecrypted);
-        System.out.println("Thank You for using this software!");
-    }
 }
