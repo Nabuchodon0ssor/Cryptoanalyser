@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 target/
+out/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
@@ -7,7 +8,6 @@ target/
 ### IntelliJ IDEA ###
 .idea/
 .mvn/
-.gitignore
 mvnw
 mvnw.cmd
 *.iws
@@ -17,3 +17,4 @@ out
 SSH.txt
 ### VS Code ###
 .vscode/
+/out/
