@@ -18,3 +18,20 @@ The program uses the same key for correctly encoding and decoding the file. Ther
 What could not be accomplished: Brute-force mode with frequency analysis. Only one language (English) is available. The implemented brute-force mode works with a specific project text, Harry_Potter.txt.
 
 Interesting solutions: The program can also be used via the IntelijIdea console, where you can manually enter the path to the text file and the key or directly input the text you want to encrypt/decrypt. The brute-force mode is not available for manually entered text. The project also provides the ability to select different configurations in the tools panel.
+
+## How to Run
+
+1. Clone this repository:
+   ```bash
+   git clone  https://github.com/Nabuchodon0ssor/Cryptoanalyser.git
+
+2. Navigate to the project directory:
+    ```bash
+   cd Cryptoanalyser
+
+3. Compile and run the game:
+  
+   Open the project in your favorite IDE (e.g., IntelliJ IDEA).
+   ```bash
+   Run the Application.java file, which is under src/main/java/com/javarush/Application.java
+
